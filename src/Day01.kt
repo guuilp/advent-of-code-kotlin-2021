@@ -1,17 +1,31 @@
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+    val inputAsStringList: List<String> = readInput("Day01_test")
+    val inputAsIntList = inputAsStringList.map { it.toInt() }
+
+    println("Part 1 result: ${part1(inputAsIntList)}")
+    println("Part 2 result: ${part2(inputAsIntList)}")
+
+}
+
+fun part1(input: List<Int>): Int {
+    var measurementsLargerThanPrevious = 0
+
+    input.forEachIndexed { index, i ->
+        if (index != 0 && i > input[index - 1]) measurementsLargerThanPrevious++
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
+    return measurementsLargerThanPrevious
+}
+
+fun part2(input: List<Int>): Int {
+    var measurementsLargerThanPrevious = 0
+
+    (0..input.size - 4).forEach { index ->
+        val currentTree = input[index] + input[index + 1] + input[index + 2]
+        val nextTree = input[index + 1] + input[index + 2] + input[index + 3]
+
+        if (nextTree > currentTree) measurementsLargerThanPrevious++
     }
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
+    return measurementsLargerThanPrevious
 }
