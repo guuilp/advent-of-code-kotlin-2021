@@ -2,9 +2,17 @@ fun main() {
     fun part1(input: List<String>): Int {
         val gamaRate = mutableListOf<String>()
         val epsilonRate = mutableListOf<String>()
+        val rowLength = input[0].length
+        val diagnosticReportList = Array(rowLength) { Array(input.size) { "" } }
 
-        repeat(input[0].length) { position ->
-            val column = input.map { it.substring(position, position + 1) }
+        input.forEachIndexed { rowIndex, row ->
+            (0 until rowLength).forEach { index ->
+                diagnosticReportList[index][rowIndex] = row.substring(index, index + 1)
+            }
+        }
+
+        (0 until rowLength).forEach { index ->
+            val column = diagnosticReportList[index]
             val zeroOccurrences = column.count { it == "0" }
             val oneOccurrences = column.count { it == "1" }
 
@@ -28,5 +36,4 @@ fun main() {
 
     println("Part 1 result: ${part1(input)}")
     println("Part 2 result: ${part2(input)}")
-
 }
