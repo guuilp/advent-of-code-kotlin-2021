@@ -1,20 +1,14 @@
+import kotlin.system.measureTimeMillis
+
 fun main() {
     fun part1(input: List<String>): Int {
         val gamaRate = mutableListOf<String>()
         val epsilonRate = mutableListOf<String>()
         val rowLength = input[0].length
-        val diagnosticReportList = Array(rowLength) { Array(input.size) { "" } }
-
-        input.forEachIndexed { rowIndex, row ->
-            (0 until rowLength).forEach { index ->
-                diagnosticReportList[index][rowIndex] = row.substring(index, index + 1)
-            }
-        }
 
         (0 until rowLength).forEach { index ->
-            val column = diagnosticReportList[index]
-            val zeroOccurrences = column.count { it == "0" }
-            val oneOccurrences = column.count { it == "1" }
+            val zeroOccurrences = input.count { it[index] == '0' }
+            val oneOccurrences = input.size - zeroOccurrences
 
             if (zeroOccurrences > oneOccurrences) {
                 gamaRate.add("0")
@@ -69,6 +63,17 @@ fun main() {
 
     val input: List<String> = readInput("Day03_test")
 
-    println("Part 1 result: ${part1(input)}")
-    println("Part 2 result: ${part2(input)}")
+    val executionTimePartOne = measureTimeMillis {
+        println("Part 1 result: ${part1(input)}")
+    }
+    println("Part 1 - Execution time: ${executionTimePartOne}ms")
+
+    check(part1(input) == 2743844)
+
+    val executionTimePartTwo = measureTimeMillis {
+        println("Part 1 result: ${part2(input)}")
+    }
+    println("Part 2 - Execution time: ${executionTimePartTwo}ms")
+
+    check(part2(input) == 6677951)
 }
