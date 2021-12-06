@@ -29,7 +29,42 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        return 0
+        var oxygenGeneratorRating = input
+        var co2ScrubberRating = input
+
+        val rowLength = input[0].length
+
+        (0 until rowLength).forEach { index ->
+            if (oxygenGeneratorRating.size == 1) return@forEach
+
+            val zeroOccurrences = oxygenGeneratorRating.count { it[index] == '0' }
+            val oneOccurrences = oxygenGeneratorRating.size - zeroOccurrences
+
+            oxygenGeneratorRating = if (zeroOccurrences > oneOccurrences) {
+                oxygenGeneratorRating.filter { it[index] == '0' }
+            } else if (zeroOccurrences < oneOccurrences) {
+                oxygenGeneratorRating.filter { it[index] == '1' }
+            } else {
+                oxygenGeneratorRating.filter { it[index] == '1' }
+            }
+        }
+
+        (0 until rowLength).forEach { index ->
+            if (co2ScrubberRating.size == 1) return@forEach
+
+            val zeroOccurrences = co2ScrubberRating.count { it[index] == '0' }
+            val oneOccurrences = co2ScrubberRating.size - zeroOccurrences
+
+            co2ScrubberRating = if (zeroOccurrences > oneOccurrences) {
+                co2ScrubberRating.filter { it[index] == '1' }
+            } else if (zeroOccurrences < oneOccurrences) {
+                co2ScrubberRating.filter { it[index] == '0' }
+            } else {
+                co2ScrubberRating.filter { it[index] == '0' }
+            }
+        }
+
+        return oxygenGeneratorRating.first().toInt(2) * co2ScrubberRating.first().toInt(2)
     }
 
     val input: List<String> = readInput("Day03_test")
